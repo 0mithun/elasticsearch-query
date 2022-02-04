@@ -1,0 +1,31 @@
+$params = [
+            'index' => tablePrefix() . 'devicedaystats',
+            'size' => 0,
+            'body' => [
+                'query' => [
+                    'bool' => [
+                        'must' => [
+                            [
+                                'terms' => [
+                                    'projectId.keyword' => $projectIds
+                                ]
+                            ],
+                        ]
+                    ]
+                ],
+                'aggs' => [
+                    'sum_of_clicks' => [
+                        'sum' => [
+                            'field' => 'clicks'
+                        ]
+                    ],
+                    'sum_of_sent' => [
+                        'sum' => [
+                            'field' => 'sent'
+                        ]
+                    ],
+                ]
+            ]
+        ];
+        
+$result = $this->db->search($params);
